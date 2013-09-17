@@ -67,3 +67,23 @@ def get_page(url):
 		return urllib.urlopen(url).read()
 	except:
 		return ""
+		
+def split_string(source,splitlist):
+    flag = False
+    word_list = []
+    word = ''
+    for char in source:
+        #print char + '1'
+        if char in splitlist:
+           # print char + '2'
+            flag = True
+        else:
+            if flag:
+              #  print char + '3'
+                word_list.append(word)
+                word = char
+                flag = False
+            else:
+                word = word + char
+    word_list.append(word)
+    return word_list

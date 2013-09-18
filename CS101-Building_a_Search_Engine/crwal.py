@@ -29,12 +29,16 @@ def get_all_links(page):
 			break
 	return links
 
-def add_to_index(index,keyword,url):
-	for item in index:
-		if item[0] == keyword:
-			item[1].append(url)
-			return 
-	index.append([keyword,[url]])
+def add_to_index(index, keyword, url):
+    for entry in index:
+        if entry[0] == keyword :
+            for item in entry[1]:
+				if item[0] == url:
+					return 
+            entry[1].append([url,0])
+            return
+    # not found, add new keyword to index
+    index.append([keyword, [[url,0]]])
 
 def add_page_to_index(index,url,content):
 	con_list = content.split()
@@ -87,3 +91,16 @@ def split_string(source,splitlist):
                 word = word + char
     word_list.append(word)
     return word_list
+	
+def lookup(index, keyword):
+    for entry in index:
+        if entry[0] == keyword:
+            return entry[1]
+    return None
+	
+def record_user_click(index,keyword,url):
+    urls = look_up(index,keyword)
+    if urls:
+        for item in urls:
+            if item[0] == url:
+                item[1] += 1
